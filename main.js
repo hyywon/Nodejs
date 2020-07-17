@@ -26,13 +26,13 @@
         })
       } else {
         fs.readdir('./data', function (error, filelist) {
-          var filteredId = path.parse(queryData.id).path
+          var filteredId = path.parse(queryData.id).base;
           fs.readFile(`data/${filteredId}`, 'utf8', function (err, description) {
             var title = queryData.id;
             var sanitizedTitle = sanitizeHtml(title);
             var sanitizedDescription = sanitizeHtml(description);
             var list = template.list(filelist);
-            var html = template.html(sanitizedTitle, list, `<h2>${queryData.id}</h2>${sanitizedTitle}`,
+            var html = template.html(sanitizedTitle, list, `<h2>${sanitizedTitle}</h2>${sanitizedDescription}`,
               ` <a href="/create">create</a> <a href="/update?id=${sanitizedTitle}"> update </a>
                 <form action="delete_process" method="post">
                   <input type="hidden" name="id" value="${sanitizedTitle}">
